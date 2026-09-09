@@ -139,7 +139,7 @@ nav {
 }
 
 /* --- MAIN LAYOUT --- */
-.container { max-width: 1100px; margin: 0 auto; padding: 4rem 20px; }
+.container { max-width: 1100px; margin: 0 auto; padding: 4rem 20px; position: relative; }
 
 .features-grid { 
     display: grid; 
@@ -314,4 +314,416 @@ footer {
 @media (max-width: 480px) {
     .btn { width: 100%; }
     .hero-btns { flex-direction: column; }
+}
+
+/* ============================================
+   EVENT PAGE
+   ============================================ */
+
+.event-hero {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(255,255,255,0.18), transparent 45%),
+        radial-gradient(circle at 85% 25%, rgba(255,215,0,0.18), transparent 40%),
+        linear-gradient(135deg, var(--deep-purple), var(--primary-pink));
+    color: white;
+    text-align: center;
+    padding: 4rem 5% 6.5rem;
+}
+
+.hero-content { position: relative; z-index: 2; }
+
+/* subtle dot-grid texture so the gradient doesn't read as flat */
+.hero-texture {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.35) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* twinkling sparkle accents */
+.hero-sparkle {
+    position: absolute;
+    font-size: 1.1rem;
+    color: var(--gold-accent);
+    opacity: 0.3;
+    z-index: 1;
+    pointer-events: none;
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.7));
+    animation: sparkle-twinkle 3.2s ease-in-out infinite;
+}
+
+@keyframes sparkle-twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1.2) rotate(15deg); }
+}
+
+/* wavy divider into the page */
+.hero-wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    z-index: 1;
+}
+.hero-wave-path { fill: var(--light-bg); }
+
+.event-eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.event-hero h1 { font-size: 2.6rem; margin: 0.3rem 0; line-height: 1.2; text-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+.event-hero .tagline { font-size: 1.15rem; opacity: 0.95; max-width: 700px; margin: 0.5rem auto 1.5rem; }
+
+.shimmer-text {
+    background: linear-gradient(90deg, var(--gold-accent), #fff8dc, var(--gold-accent));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--gold-accent);
+    animation: shimmer-move 3.5s linear infinite;
+}
+
+@keyframes shimmer-move {
+    to { background-position: 200% center; }
+}
+
+@media (max-width: 768px) {
+    .hero-sparkle { display: none; }
+}
+
+/* floating sparkles scattered in the page body (light background, no glow needed) */
+.page-sparkle {
+    position: absolute;
+    font-size: 1.1rem;
+    color: var(--gold-accent);
+    opacity: 0.5;
+    z-index: 0;
+    pointer-events: none;
+    animation: sparkle-twinkle 3.4s ease-in-out infinite;
+}
+
+/* small inline sparkles flanking headings/text — sit in normal text flow, zero overlap risk */
+.inline-sparkle {
+    display: inline-block;
+    font-size: 0.7em;
+    color: var(--gold-accent);
+    animation: sparkle-twinkle 2.6s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+    .page-sparkle { display: none; }
+}
+
+.event-meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 1.3rem 2rem;
+    max-width: 950px;
+    margin: 2rem auto 0;
+    backdrop-filter: blur(6px);
+}
+
+.event-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0.5rem 1.3rem;
+    flex: 1;
+    min-width: 230px;
+    text-align: left;
+}
+
+.event-meta-item i {
+    font-size: 1.5rem;
+    color: var(--gold-accent);
+    width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.event-meta-item div { display: flex; flex-direction: column; }
+.event-meta-item strong { font-size: 1rem; font-weight: 700; }
+.event-meta-item span { font-size: 0.85rem; opacity: 0.85; margin-top: 2px; }
+
+.event-meta-item.meta-link {
+    color: inherit;
+    text-decoration: none;
+    border-radius: 14px;
+    transition: background 0.2s, transform 0.2s;
+    cursor: pointer;
+}
+.event-meta-item.meta-link:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+}
+.event-meta-item.meta-link:hover span { text-decoration: underline; }
+
+/* reset default button chrome so <button class="event-meta-item"> matches the <a> version */
+button.event-meta-item {
+    background: none;
+    border: none;
+    font: inherit;
+    text-align: left;
+    width: 100%;
+}
+
+/* calendar-plus icon hint — only meaningful (and only shown) on mobile, where the tap adds to calendar */
+.calendar-hint { display: none; opacity: 0.8; }
+@media (max-width: 768px) {
+    .calendar-hint { display: inline-block; }
+}
+
+.meta-divider {
+    width: 1px;
+    align-self: stretch;
+    background: rgba(255,255,255,0.25);
+    margin: 0 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .meta-divider { display: none; }
+    .event-meta-bar { padding: 1rem 1.2rem; }
+    .event-meta-item { justify-content: center; text-align: left; min-width: 100%; }
+}
+
+/* --- DATE TABS --- */
+.date-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: -1.8rem auto 2.5rem;
+    max-width: 900px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 10;
+}
+
+.date-tab {
+    flex: 1;
+    min-width: 220px;
+    background: white;
+    border: none;
+    border-radius: 18px;
+    padding: 1.1rem 1rem;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    font-family: inherit;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.date-tab .date-tab-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #999; font-weight: 700; }
+.date-tab .date-tab-date { font-size: 1.3rem; font-weight: 700; color: var(--deep-purple); margin-top: 4px; }
+
+.date-tab:not(.locked):hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+
+.date-tab.active {
+    background: linear-gradient(135deg, var(--deep-purple), var(--primary-pink));
+}
+.date-tab.active .date-tab-label { color: rgba(255,255,255,0.8); }
+.date-tab.active .date-tab-date { color: white; }
+
+.date-tab.locked {
+    cursor: not-allowed;
+    background: #f1f1f1;
+    box-shadow: none;
+}
+.date-tab.locked .date-tab-date { color: #b3b3b3; }
+.date-tab.locked .date-tab-label { color: #bbb; }
+.date-tab .lock-note { display: block; font-size: 0.75rem; color: #aaa; margin-top: 6px; font-weight: 600; }
+
+.date-panel { display: none; }
+.date-panel.active { display: block; }
+
+/* --- SECTION HEADINGS --- */
+.event-section-title {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+.event-section-sub {
+    text-align: center;
+    color: #666;
+    max-width: 650px;
+    margin: 0 auto 2.5rem;
+}
+
+/* --- REGISTRATION CARDS (Vendor Tiers) --- */
+.reg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.reg-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-top: 6px solid var(--primary-pink);
+    position: relative;
+}
+
+.reg-card.featured { border-top-color: var(--gold-accent); }
+.reg-card.sponsor { border-top-color: var(--deep-purple); }
+
+.reg-card-ribbon {
+    position: absolute;
+    top: 14px;
+    right: -34px;
+    background: var(--gold-accent);
+    color: var(--deep-purple);
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 5px 40px;
+    transform: rotate(40deg);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.reg-card-body { padding: 2rem; }
+
+.reg-card-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.reg-card h3 { margin: 0 0 0.2rem; color: var(--deep-purple); font-size: 1.4rem; }
+.reg-card .reg-price { font-size: 2.2rem; font-weight: 700; color: var(--primary-pink); margin: 0.3rem 0 1rem; }
+.reg-card .reg-price span { font-size: 1rem; font-weight: 400; color: #888; }
+
+.reg-perks { list-style: none; padding: 0; margin: 0; }
+.reg-perks li { padding: 6px 0; font-size: 0.95rem; display: flex; gap: 10px; align-items: flex-start; }
+.reg-perks li i { color: var(--deep-purple); margin-top: 3px; }
+
+/* --- STEP FLOW (Form -> Payment) --- */
+.reg-steps { background: var(--light-bg); padding: 1.5rem 2rem 2rem; border-top: 1px solid #f0dce6; margin-top: auto; }
+
+.reg-step-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--deep-purple);
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+}
+
+.reg-step-num {
+    background: var(--deep-purple);
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.form-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    border-radius: 12px;
+    background: var(--deep-purple);
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: opacity 0.2s;
+}
+.form-btn:hover { opacity: 0.9; }
+
+/* --- PAYMENT METHOD SWITCHER --- */
+.pay-methods {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 1rem;
+}
+
+.pay-method-btn {
+    border: 2px solid #ddd;
+    background: white;
+    border-radius: 10px;
+    padding: 8px 4px;
+    font-family: inherit;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: border-color 0.2s, transform 0.15s;
+    color: #555;
+}
+.pay-method-btn i { font-size: 1.1rem; }
+.pay-method-btn:hover { transform: translateY(-2px); }
+
+.pay-method-btn.active { border-color: var(--method-color, var(--deep-purple)); color: var(--method-color, var(--deep-purple)); }
+
+.pay-qr-box {
+    background: var(--light-bg);
+    border: 1px solid #f0dce6;
+    border-radius: 14px;
+    padding: 1.2rem;
+    text-align: center;
+}
+
+.pay-qr-box .qr-image {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 0.8rem;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    display: block;
+    object-fit: contain;
+    background: white;
+}
+
+.pay-qr-box .qr-amount-hint { font-size: 0.8rem; color: var(--primary-pink); margin-top: 6px; font-weight: 600; }
+.pay-qr-box .pay-note { font-size: 0.78rem; color: #999; margin-top: 4px; min-height: 3.75rem; }
+
+/* --- INFO CALLOUT --- */
+.event-callout {
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    margin-bottom: 3rem;
+    border-left: 6px solid var(--gold-accent);
+}
+.event-callout h3 { margin-top: 0; color: var(--deep-purple); }
+
+/* --- MOBILE --- */
+@media (max-width: 768px) {
+    .date-tabs { margin-top: -1.4rem; }
+    .pay-methods { grid-template-columns: repeat(2, 1fr); }
+    .reg-card-ribbon { right: -38px; top: 18px; }
 }
