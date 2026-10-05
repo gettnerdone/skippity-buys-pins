@@ -566,13 +566,10 @@
                     tab.classList.add('locked');
                     tab.dataset.open = 'false';
                     if (lockNote) lockNote.innerHTML = '<i class="fa-solid fa-check"></i> Event completed';
-                } else if (i === currentIndex) {
-                    tab.classList.add('active');
-                    tab.dataset.open = 'true';
                 } else {
-                    tab.classList.add('locked');
-                    tab.dataset.open = 'false';
-                    if (lockNote) lockNote.innerHTML = `<i class="fa-solid fa-lock"></i> Opens after ${EVENT_SCHEDULE[i - 1].label}`;
+                    if (i === currentIndex) tab.classList.add('active');
+                    tab.dataset.open = 'true';
+                    if (lockNote) lockNote.remove();
                 }
             });
 
